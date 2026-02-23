@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recrutamento de Elite - Óticas Ammo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .step { display: none; }
+        .step.active { display: block; }
+        .progress-bar { transition: width 0.3s ease; }
+        input[type="radio"]:checked + label { border-color: #1e40af; background-color: #eff6ff; }
+        .hidden-field { display: none; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+    <div class="max-w-4xl mx-auto my-10 bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-200">
+        <div class="h-2 bg-gray-200">
+            <div id="progressBar" class="h-full bg-blue-600 progress-bar" style="width: 5%"></div>
+        </div>
+
+        <form id="formTriagem" class="p-8 md:p-12">
+            
+            <div class="step active" id="step1">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-extrabold text-blue-900 uppercase">Triagem de Alta Performance</h1>
+                    <p class="text-gray-500 mt-2">Identificando talentos com foco em resultados e gestão de tempo.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" name="nome" placeholder="Nome Completo" class="p-4 border rounded-xl" required>
+                    <input type="email" name="email" placeholder="E-mail" class="p-4 border rounded-xl" required>
+                    <input type="tel" name="zap" placeholder="WhatsApp" class="p-4 border rounded-xl" required>
+                    <input type="text" name="experiencia" placeholder="Anos de Experiência em Vendas" class="p-4 border rounded-xl" required>
+                </div>
+                <button type="button" onclick="next(2, 25)" class="mt-8 w-full bg-blue-900 text-white py-4 rounded-xl font-bold hover:bg-blue-800 transition">Iniciar Avaliação</button>
+            </div>
+
+            <div class="step" id="step2">
+                <h2 class="text-xl font-bold mb-6 border-l-4 border-blue-600 pl-4">Bloco I: Perfil Comportamental</h2>
+                <div id="questionsComportamental" class="space-y-8"></div>
+                <button type="button" onclick="next(3, 50)" class="mt-10 w-full bg-blue-900 text-white py-4 rounded-xl font-bold">Próxima Etapa</button>
+            </div>
+
+            <div class="step" id="step3">
+                <h2 class="text-xl font-bold mb-6 border-l-4 border-red-600 pl-4">Bloco II: Tríade e Urgência de Vendas</h2>
+                <div id="questionsTriade" class="space-y-8"></div>
+                <button type="button" onclick="checkFitScore()" class="mt-10 w-full bg-blue-900 text-white py-4 rounded-xl font-bold hover:bg-blue-800 transition">Analisar Perfil</button>
+            </div>
+
+            <div class="step" id="step4">
+                <h2 class="text-2xl font-bold text-blue-900 mb-2">Fase 2: Aprofundamento de Perfil</h2>
+                <p class="text-gray-600 mb-6">Seu perfil comportamental foi aprovado! Precisamos de mais alguns dados para avançar.</p>
+                
+                <h3 class="font-bold mb-3 border-b pb-2">Dados Pessoais</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div><label class="text-sm text-gray-600">Data de Nascimento</label><input type="date" name="nascimento" class="w-full p-3 border rounded-xl"></div>
+                    <div><label class="text-sm text-gray-600">CPF</label><input type="text" name="cpf" placeholder="000.000.000-00" class="w-full p-3 border rounded-xl"></div>
+                    <div><label class="text-sm text-gray-600">RG</label><input type="text" name="rg" placeholder="Número do RG" class="w-full p-3 border rounded-xl"></div>
+                    <div><label class="text-sm text-gray-600">Nome da Mãe</label><input type="text" name="nomeMae" placeholder="Nome completo da mãe" class="w-full p-3 border rounded-xl"></div>
+                    
+                    <div>
+                        <label class="text-sm text-gray-600">Estado Civil</label>
+                        <select name="estadoCivil" id="estadoCivil" onchange="toggleCasamento()" class="w-full p-3 border rounded-xl bg-white">
+                            <option value="Solteiro(a)">Solteiro(a)</option>
+                            <option value="Casado(a)">Casado(a)</option>
+                            <option value="Divorciado(a)">Divorciado(a)</option>
+                            <option value="Viúvo(a)">Viúvo(a)</option>
+                        </select>
+                    </div>
+                    <div><label class="text-sm text-gray-600">Filhos ou Dependentes?</label><input type="text" name="dependentes" placeholder="Ex: 2 filhos" class="w-full p-3 border rounded-xl"></div>
+                    
+                    <div id="campoConjugue" class="hidden-field"><label class="text-sm text-gray-600">Nome do Cônjuge</label><input type="text" name="conjugue" class="w-full p-3 border rounded-xl"></div>
+                    <div id="campoCertidao" class="hidden-field"><label class="text-sm text-gray-600">Nº Certidão de Casamento (Opcional)</label><input type="text" name="certidao" class="w-full p-3 border rounded-xl"></div>
+                </div>
+
+                <h3 class="font-bold mb-3 border-b pb-2 mt-8">Histórico Profissional</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 bg-blue-50 p-4 rounded-xl border border-blue-100">
+                    <div class="md:col-span-2"><label class="text-sm text-gray-800 font-bold">Última Experiência Profissional (Empresa e Cargo)</label><input type="text" name="ultimaExp" placeholder="Ex: Óticas Carol - Vendedor" class="w-full p-3 border rounded-xl"></div>
+                    <div><label class="text-sm text-gray-800 font-bold">Data de Início (Aprox.)</label><input type="month" id="dataInicio" name="dataInicio" class="w-full p-3 border rounded-xl"></div>
+                    <div><label class="text-sm text-gray-800 font-bold">Data de Saída (Deixe vazio se atual)</label><input type="month" id="dataFim" name="dataFim" class="w-full p-3 border rounded-xl"></div>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="text-sm text-gray-600">Outras Experiências (Local, Cargo e Período)</label>
+                    <textarea name="outrasExp" rows="3" class="w-full p-3 border rounded-xl" placeholder="Ex: Loja X - Gerente - 2018 a 2020..."></textarea>
+                </div>
+
+                <button type="button" onclick="finalSubmission()" class="mt-4 w-full bg-green-600 text-white py-4 rounded-xl font-bold hover:bg-green-700 transition">Finalizar e Enviar Currículo</button>
+            </div>
+
+            <div class="step text-center" id="stepResult">
+                <h2 class="text-3xl font-bold text-gray-800" id="resultTitle">Candidatura Processada</h2>
+                <div class="mt-6 p-6 bg-gray-50 rounded-xl text-left" id="resultDetail"></div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Substitua por sua URL do Google Apps Script
+        const urlScript = "https://script.google.com/macros/s/AKfycbz6CW4CXTyrl4TaBQbNWJmiVH7E2eq4mgYR1f-h6wBgF1mmbpNiL-KNtcw_62Tn8LUl/exec"; 
+        
+        let globalFitScore = 0;
+        let globalCounts = {};
+
+        const questions = [
+            // (As 24 perguntas permanecem exatamente as mesmas que você me enviou na primeira mensagem)
+            { id: 1, text: "Em um novo projeto, sua prioridade é:", options: [{t:"Fazer rápido", v:"T"}, {t:"Fazer junto", v:"G"}, {t:"Fazer diferente", v:"A"}, {t:"Fazer certo", v:"L"}] },
+            { id: 2, text: "Seu maior medo profissional é:", options: [{t:"Falhar no resultado", v:"T"}, {t:"Ficar isolado", v:"G"}, {t:"Perder a liberdade", v:"A"}, {t:"Cometer erros técnicos", v:"L"}] },
+            { id: 3, text: "Como você convence alguém?", options: [{t:"Pela autoridade", v:"T"}, {t:"Pela empatia", v:"G"}, {t:"Pelo entusiasmo", v:"A"}, {t:"Pelos dados", v:"L"}] },
+            { id: 4, text: "No ambiente de trabalho, você prefere:", options: [{t:"Competição", v:"T"}, {t:"Harmonia", v:"G"}, {t:"Novidades", v:"A"}, {t:"Ordem", v:"L"}] },
+            { id: 5, text: "Em reuniões, você costuma:", options: [{t:"Ir direto ao ponto", v:"T"}, {t:"Ouvir todos antes", v:"G"}, {t:"Trazer ideias novas", v:"A"}, {t:"Anotar tudo", v:"L"}] },
+            { id: 6, text: "Seu ritmo de trabalho é:", options: [{t:"Impulsivo e rápido", v:"T"}, {t:"Calmo e constante", v:"G"}, {t:"Irregular e criativo", v:"A"}, {t:"Lento e detalhista", v:"L"}] },
+            { id: 7, text: "Como lida com críticas?", options: [{t:"Fica agressivo", v:"T"}, {t:"Fica magoado", v:"G"}, {t:"Ignora e muda", v:"A"}, {t:"Analisa o erro", v:"L"}] },
+            { id: 8, text: "Sua mesa de trabalho geralmente está:", options: [{t:"Funcional", v:"T"}, {t:"Com fotos/pessoal", v:"G"}, {t:"Bagunçada/Criativa", v:"A"}, {t:"Impecável", v:"L"}] },
+            { id: 9, text: "Você se sente melhor quando:", options: [{t:"Vence um desafio", v:"T"}, {t:"Ajuda alguém", v:"G"}, {t:"Cria algo novo", v:"A"}, {t:"Segue um plano", v:"L"}] },
+            { id: 10, text: "Ao tomar decisões, você usa:", options: [{t:"Instinto", v:"T"}, {t:"Sentimento", v:"G"}, {t:"Visão", v:"A"}, {t:"Lógica", v:"L"}] },
+            { id: 11, text: "Como você lida com regras?", options: [{t:"Usa se ajudar", v:"T"}, {t:"Segue para agradar", v:"G"}, {t:"Tenta mudá-las", v:"A"}, {t:"Segue à risca", v:"L"}] },
+            { id: 12, text: "Sua principal característica é:", options: [{t:"Determinação", v:"T"}, {t:"Lealdade", v:"G"}, {t:"Criatividade", v:"A"}, {t:"Prudência", v:"L"}] },
+            { id: 13, text: "Quanto tempo você gasta em reuniões que não geram venda?", options: [{t:"Muitas", v:"C"}, {t:"Algumas", v:"U"}, {t:"Poucas", v:"I"}] },
+            { id: 14, text: "Você planeja suas prospecções com antecedência?", options: [{t:"Sempre", v:"I"}, {t:"Às vezes", v:"U"}, {t:"Nunca", v:"C"}] },
+            { id: 15, text: "Como você lida com o celular durante o atendimento?", options: [{t:"Foco total no cliente", v:"I"}, {t:"Olho notificações", v:"C"}, {t:"Respondo urgências", v:"U"}] },
+            { id: 16, text: "Qual a sua reação ao bater a meta no dia 15?", options: [{t:"Dobrar a aposta", v:"I"}, {t:"Relaxar o ritmo", v:"C"}, {t:"Ajudar o time", v:"G"}] },
+            { id: 17, text: "Você estuda técnicas de venda semanalmente?", options: [{t:"Sim", v:"I"}, {t:"Só quando cobrado", v:"U"}, {t:"Não tenho tempo", v:"C"}] },
+            { id: 18, text: "Sua agenda é dividida por prioridades?", options: [{t:"Sim, rigorosamente", v:"I"}, {t:"Tenho uma lista mental", v:"U"}, {t:"Vou resolvendo o que chega", v:"C"}] },
+            { id: 19, text: "Um cliente pede um desconto que você não pode dar. Você:", options: [{t:"Negocia valor/benefício", v:"I"}, {t:"Chama o gerente rápido ", v:"U"}, {t:"Dá o desconto e assume", v:"G"}] },
+            { id: 20, text: "Como você se sente ao final do dia?", options: [{t:"Dever cumprido", v:"I"}, {t:"Esgotado/Correria", v:"U"}, {t:"Frustrado/Lento", v:"C"}] },
+            { id: 21, text: "Você faz pós-venda sem ser solicitado?", options: [{t:"Sim, para fidelizar", v:"I"}, {t:"Raramente", v:"C"}, {t:"Só se houver problema ", v:"U"}] },
+            { id: 22, text: "Qual o seu nível de urgência com leads novos?", options: [{t:"Imediato", v:"T"}, {t:"Em até 1 hora", v:"I"}, {t:"Quando sobrar tempo", v:"C"}] },
+            { id: 23, text: "Você gasta tempo lendo notícias não relacionadas a vendas?", options: [{t:"Muitas vezes", v:"C"}, {t:"Moderado", v:"U"}, {t:"Quase nunca", v:"I"}] },
+            { id: 24, text: "Sua maior urgência hoje é:", options: [{t:"Bater recordes", v:"T"}, {t:"Aprender algo novo", v:"A"}, {t:"Organizar o processo", v:"L"}] }
+        ];
+
+        function renderQuestions() {
+            const compDiv = document.getElementById('questionsComportamental');
+            const triDiv = document.getElementById('questionsTriade');
+            questions.forEach((q, index) => {
+                const html = `
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
+                        <p class="font-bold text-lg mb-4">${q.id}. ${q.text}</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            ${q.options.map(opt => `
+                                <input type="radio" name="q${q.id}" value="${opt.v}" id="q${q.id}_${opt.v}" class="hidden" required>
+                                <label for="q${q.id}_${opt.v}" class="p-4 border-2 rounded-lg cursor-pointer text-sm font-medium hover:border-blue-300 transition block">
+                                    ${opt.t}
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                if (index < 12) compDiv.innerHTML += html;
+                else triDiv.innerHTML += html;
+            });
+        }
+        renderQuestions();
+
+        function next(step, progress) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + step).classList.add('active');
+            document.getElementById('progressBar').style.width = progress + '%';
+            window.scrollTo(0, 0);
+        }
+
+        function toggleCasamento() {
+            const estado = document.getElementById('estadoCivil').value;
+            const campoConj = document.getElementById('campoConjugue');
+            const campoCert = document.getElementById('campoCertidao');
+            if (estado === "Casado(a)") {
+                campoConj.style.display = 'block';
+                campoCert.style.display = 'block';
+            } else {
+                campoConj.style.display = 'none';
+                campoCert.style.display = 'none';
+            }
+        }
+
+        function checkFitScore() {
+            const formData = new FormData(document.getElementById('formTriagem'));
+            let counts = { T:0, G:0, A:0, L:0, I:0, U:0, C:0 };
+            
+            for (let [key, value] of formData.entries()) {
+                if (counts[value] !== undefined) counts[value]++;
+            }
+            globalCounts = counts;
+
+            let fitScore = ((counts.T * 2.5) + (counts.I * 3.5) - (counts.C * 2)) * 2;
+            globalFitScore = Math.max(0, Math.min(100, fitScore)).toFixed(0);
+
+            // Verifica se o Fit Score é maior que 60
+            if (globalFitScore > 60) {
+                next(4, 75); // Vai para etapa de Dados Complementares
+            } else {
+                // Se for menor que 60, já envia os dados e encerra aqui (Banco de Talentos)
+                sendToGoogleSheets("Banco de Talentos (Fit < 60%)", 0);
+                showResult("Agradecemos seu tempo!", `No momento, seu perfil ficará em nosso banco de talentos. Agradecemos o interesse em fazer parte das Óticas Ammo.`);
+            }
+        }
+
+        async function finalSubmission() {
+            // Algoritmo de Estabilidade
+            const dataInicio = document.getElementById('dataInicio').value;
+            const dataFim = document.getElementById('dataFim').value;
+            
+            if(!dataInicio) {
+                alert("Por favor, informe a Data de Início da sua última experiência.");
+                return;
+            }
+
+            let start = new Date(dataInicio);
+            let end = dataFim ? new Date(dataFim) : new Date(); // Se não colocar fim, assume a data atual
+            
+            let mesesEstabilidade = (end.getFullYear() - start.getFullYear()) * 9 + (end.getMonth() - start.getMonth());
+            
+            let status = "";
+            let msgTitle = "";
+            let msgBody = "";
+
+            if (mesesEstabilidade > 9) {
+                status = "Apto para entrevista presencial";
+                msgTitle = "Parabéns! Você foi aprovado(a)!";
+                msgBody = `<div class="bg-green-100 border-l-4 border-green-500 text-green-800 p-4 mb-4">
+                            <p class="font-bold text-xl">Apto para Entrevista Presencial</p>
+                           </div>
+                           <p class="text-gray-700 text-lg leading-relaxed">
+                            Agradecemos o seu interesse em fazer parte do time de elite das <b>Óticas Ammo</b>. 
+                            Sua estabilidade e perfil comportamental superaram nossas expectativas iniciais!<br><br>
+                            <b>Próximo Passo:</b> Nosso time de recrutamento entrará em contato via WhatsApp para agendar sua entrevista pessoal. Fique atento(a)!
+                           </p>`;
+            } else {
+                status = "Banco de Talentos (Estabilidade < 9m)";
+                msgTitle = "Candidatura Recebida";
+                msgBody = `<p class="text-gray-700 text-lg leading-relaxed">Agradecemos o envio dos seus dados completos! No momento, buscamos perfis com uma estabilidade um pouco maior em experiências anteriores, mas seu currículo ficará guardado em nosso Banco de Talentos Vip para oportunidades futuras nas Óticas Ammo.</p>`;
+            }
+
+            event.target.innerText = "Enviando...";
+            event.target.disabled = true;
+
+            await sendToGoogleSheets(status, mesesEstabilidade);
+            showResult(msgTitle, msgBody);
+        }
+
+        async function sendToGoogleSheets(status, estabilidade) {
+            const formData = new FormData(document.getElementById('formTriagem'));
+            let respostas = {};
+            for (let [key, value] of formData.entries()) {
+                if(!key.startsWith('q')) respostas[key] = value; // Salva apenas dados textuais, ignora as 'q1, q2' no json de respostas pra limpar a planilha
+            }
+
+            const profiles = { T: "Tubarão", G: "Gato", A: "Águia", L: "Lobo" };
+            let max = 'T';
+            ['G','A','L'].forEach(p => { if(globalCounts[p] > globalCounts[max]) max = p; });
+
+            const payload = {
+                nome: formData.get('nome'),
+                email: formData.get('email'),
+                whatsapp: formData.get('zap'),
+                status: status,
+                fitScore: globalFitScore,
+                estabilidade: estabilidade,
+                perfilDominante: profiles[max],
+                cpf: formData.get('cpf') || "-",
+                rg: formData.get('rg') || "-",
+                nascimento: formData.get('nascimento') || "-",
+                nomeMae: formData.get('nomeMae') || "-",
+                estadoCivil: formData.get('estadoCivil') || "-",
+                conjugue: formData.get('conjugue') || "-",
+                dependentes: formData.get('dependentes') || "-",
+                ultimaExp: formData.get('ultimaExp') || "-",
+                outrasExp: formData.get('outrasExp') || "-"
+            };
+
+            try {
+                await fetch(urlScript, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(payload)
+                });
+            } catch (error) {
+                console.error("Erro de conexão.", error);
+            }
+        }
+
+        function showResult(title, htmlBody) {
+            next('Result', 100);
+            document.getElementById('resultTitle').innerText = title;
+            document.getElementById('resultDetail').innerHTML = htmlBody;
+        }
+    </script>
+</body>
+</html>
