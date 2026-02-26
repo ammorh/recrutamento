@@ -33,13 +33,13 @@
                     <input type="tel" name="zap" placeholder="WhatsApp" class="p-4 border rounded-xl" required>
                     <input type="text" name="experiencia" placeholder="Tem Experiência em Vendas?" class="p-4 border rounded-xl" required>
                 </div>
-                <button type="button" onclick="next(2, 25)" class="mt-8 w-full bg-blue-900 text-white py-4 rounded-xl font-bold hover:bg-blue-800 transition">Iniciar Avaliação</button>
+                <button type="button" onclick="validateAndNext(1, 2, 25)" class="mt-8 w-full bg-blue-900 text-white py-4 rounded-xl font-bold hover:bg-blue-800 transition">Iniciar Avaliação</button>
             </div>
 
             <div class="step" id="step2">
                 <h2 class="text-xl font-bold mb-6 border-l-4 border-blue-600 pl-4">Bloco I: Perfil Comportamental</h2>
                 <div id="questionsComportamental" class="space-y-8"></div>
-                <button type="button" onclick="next(3, 50)" class="mt-10 w-full bg-blue-900 text-white py-4 rounded-xl font-bold">Próxima Etapa</button>
+                <button type="button" onclick="validateAndNext(2, 3, 50)" class="mt-10 w-full bg-blue-900 text-white py-4 rounded-xl font-bold">Próxima Etapa</button>
             </div>
 
             <div class="step" id="step3">
@@ -54,39 +54,40 @@
                 
                 <h3 class="font-bold mb-3 border-b pb-2">Dados Pessoais</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                    <div><label class="text-sm text-gray-600">Data de Nascimento</label><input type="date" name="nascimento" class="w-full p-3 border rounded-xl"></div>
-                    <div><label class="text-sm text-gray-600">CPF</label><input type="text" name="cpf" placeholder="000.000.000-00" class="w-full p-3 border rounded-xl"></div>
-                    <div><label class="text-sm text-gray-600">RG</label><input type="text" name="rg" placeholder="Número do RG" class="w-full p-3 border rounded-xl"></div>
-                    <div><label class="text-sm text-gray-600">Nome da Mãe</label><input type="text" name="nomeMae" placeholder="Nome completo da mãe" class="w-full p-3 border rounded-xl"></div>
+                    <div><label class="text-sm text-gray-600">Data de Nascimento</label><input type="date" name="nascimento" class="w-full p-3 border rounded-xl" required></div>
+                    <div><label class="text-sm text-gray-600">CPF</label><input type="text" name="cpf" placeholder="000.000.000-00" class="w-full p-3 border rounded-xl" required></div>
+                    <div><label class="text-sm text-gray-600">RG</label><input type="text" name="rg" placeholder="Número do RG" class="w-full p-3 border rounded-xl" required></div>
+                    <div><label class="text-sm text-gray-600">Nome da Mãe</label><input type="text" name="nomeMae" placeholder="Nome completo da mãe" class="w-full p-3 border rounded-xl" required></div>
                     
                     <div>
                         <label class="text-sm text-gray-600">Estado Civil</label>
-                        <select name="estadoCivil" id="estadoCivil" onchange="toggleCasamento()" class="w-full p-3 border rounded-xl bg-white">
+                        <select name="estadoCivil" id="estadoCivil" onchange="toggleCasamento()" class="w-full p-3 border rounded-xl bg-white" required>
+                            <option value="">Selecione...</option>
                             <option value="Solteiro(a)">Solteiro(a)</option>
                             <option value="Casado(a)">Casado(a)</option>
                             <option value="Divorciado(a)">Divorciado(a)</option>
                             <option value="Viúvo(a)">Viúvo(a)</option>
                         </select>
                     </div>
-                    <div><label class="text-sm text-gray-600">Filhos ou Dependentes?</label><input type="text" name="dependentes" placeholder="Ex: 2 filhos" class="w-full p-3 border rounded-xl"></div>
+                    <div><label class="text-sm text-gray-600">Filhos ou Dependentes?</label><input type="text" name="dependentes" placeholder="Ex: Não tenho / 2 filhos" class="w-full p-3 border rounded-xl" required></div>
                     
-                    <div id="campoConjugue" class="hidden-field"><label class="text-sm text-gray-600">Nome do Cônjuge</label><input type="text" name="conjugue" class="w-full p-3 border rounded-xl"></div>
+                    <div id="campoConjugue" class="hidden-field"><label class="text-sm text-gray-600">Nome do Cônjuge</label><input type="text" name="conjugue" id="inputConjugue" class="w-full p-3 border rounded-xl"></div>
                     <div id="campoCertidao" class="hidden-field"><label class="text-sm text-gray-600">Nº Certidão de Casamento (Opcional)</label><input type="text" name="certidao" class="w-full p-3 border rounded-xl"></div>
                 </div>
 
                 <h3 class="font-bold mb-3 border-b pb-2 mt-8">Histórico Profissional</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 bg-blue-50 p-4 rounded-xl border border-blue-100">
-                    <div class="md:col-span-2"><label class="text-sm text-gray-800 font-bold">Última Experiência Profissional (Empresa e Cargo)</label><input type="text" name="ultimaExp" placeholder="Ex: Óticas Carol - Vendedor" class="w-full p-3 border rounded-xl"></div>
-                    <div><label class="text-sm text-gray-800 font-bold">Data de Início (Aprox.)</label><input type="month" id="dataInicio" name="dataInicio" class="w-full p-3 border rounded-xl"></div>
+                    <div class="md:col-span-2"><label class="text-sm text-gray-800 font-bold">Última Experiência Profissional (Empresa e Cargo)</label><input type="text" name="ultimaExp" placeholder="Ex: Óticas Carol - Vendedor" class="w-full p-3 border rounded-xl" required></div>
+                    <div><label class="text-sm text-gray-800 font-bold">Data de Início (Aprox.)</label><input type="month" id="dataInicio" name="dataInicio" class="w-full p-3 border rounded-xl" required></div>
                     <div><label class="text-sm text-gray-800 font-bold">Data de Saída (Deixe vazio se atual)</label><input type="month" id="dataFim" name="dataFim" class="w-full p-3 border rounded-xl"></div>
                 </div>
                 
                 <div class="mb-6">
                     <label class="text-sm text-gray-600">Outras Experiências (Local, Cargo e Período)</label>
-                    <textarea name="outrasExp" rows="3" class="w-full p-3 border rounded-xl" placeholder="Ex: Loja X - Gerente - 2018 a 2020..."></textarea>
+                    <textarea name="outrasExp" rows="3" class="w-full p-3 border rounded-xl" placeholder="Ex: Loja X - Gerente - 2018 a 2020..." required></textarea>
                 </div>
 
-                <button type="button" onclick="finalSubmission()" class="mt-4 w-full bg-green-600 text-white py-4 rounded-xl font-bold hover:bg-green-700 transition">Finalizar e Enviar Currículo</button>
+                <button type="button" onclick="finalSubmission()" id="btnFinalizar" class="mt-4 w-full bg-green-600 text-white py-4 rounded-xl font-bold hover:bg-green-700 transition">Finalizar e Enviar Currículo</button>
             </div>
 
             <div class="step text-center" id="stepResult">
@@ -97,14 +98,12 @@
     </div>
 
     <script>
-        // Substitua por sua URL do Google Apps Script
         const urlScript = "https://script.google.com/macros/s/AKfycbz6CW4CXTyrl4TaBQbNWJmiVH7E2eq4mgYR1f-h6wBgF1mmbpNiL-KNtcw_62Tn8LUl/exec"; 
         
         let globalFitScore = 0;
         let globalCounts = {};
 
         const questions = [
-            // (As 24 perguntas permanecem exatamente as mesmas que você me enviou na primeira mensagem)
             { id: 1, text: "Em um novo projeto, sua prioridade é:", options: [{t:"Fazer rápido", v:"T"}, {t:"Fazer junto", v:"G"}, {t:"Fazer diferente", v:"A"}, {t:"Fazer certo", v:"L"}] },
             { id: 2, text: "Seu maior medo profissional é:", options: [{t:"Falhar no resultado", v:"T"}, {t:"Ficar isolado", v:"G"}, {t:"Perder a liberdade", v:"A"}, {t:"Cometer erros técnicos", v:"L"}] },
             { id: 3, text: "Como você convence alguém?", options: [{t:"Pela autoridade", v:"T"}, {t:"Pela empatia", v:"G"}, {t:"Pelo entusiasmo", v:"A"}, {t:"Pelos dados", v:"L"}] },
@@ -154,9 +153,44 @@
         }
         renderQuestions();
 
+        function validateAndNext(currentStep, nextStep, progress) {
+            const container = document.getElementById('step' + currentStep);
+            const inputs = container.querySelectorAll('input[required], select[required]');
+            let allValid = true;
+
+            // Validação de inputs de texto/email/date
+            inputs.forEach(input => {
+                if (!input.value) {
+                    allValid = false;
+                    input.classList.add('border-red-500');
+                } else {
+                    input.classList.remove('border-red-500');
+                }
+            });
+
+            // Validação específica para Radio Buttons (perguntas)
+            if (currentStep === 2 || currentStep === 3) {
+                const radios = container.querySelectorAll('input[type="radio"]');
+                const names = new Set();
+                radios.forEach(r => names.add(r.name));
+                names.forEach(name => {
+                    if (!container.querySelector(`input[name="${name}"]:checked`)) {
+                        allValid = false;
+                    }
+                });
+            }
+
+            if (allValid) {
+                next(nextStep, progress);
+            } else {
+                alert("Por favor, preencha todos os campos obrigatórios antes de prosseguir.");
+            }
+        }
+
         function next(step, progress) {
             document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-            document.getElementById('step' + step).classList.add('active');
+            const target = typeof step === 'string' ? 'step' + step : 'step' + step;
+            document.getElementById(target).classList.add('active');
             document.getElementById('progressBar').style.width = progress + '%';
             window.scrollTo(0, 0);
         }
@@ -164,17 +198,36 @@
         function toggleCasamento() {
             const estado = document.getElementById('estadoCivil').value;
             const campoConj = document.getElementById('campoConjugue');
+            const inputConj = document.getElementById('inputConjugue');
             const campoCert = document.getElementById('campoCertidao');
+            
             if (estado === "Casado(a)") {
                 campoConj.style.display = 'block';
                 campoCert.style.display = 'block';
+                inputConj.required = true;
             } else {
                 campoConj.style.display = 'none';
                 campoCert.style.display = 'none';
+                inputConj.required = false;
             }
         }
 
         function checkFitScore() {
+            const container = document.getElementById('step3');
+            const radios = container.querySelectorAll('input[type="radio"]');
+            const names = new Set();
+            radios.forEach(r => names.add(r.name));
+            
+            let allAnswered = true;
+            names.forEach(name => {
+                if (!container.querySelector(`input[name="${name}"]:checked`)) allAnswered = false;
+            });
+
+            if (!allAnswered) {
+                alert("Responda todas as perguntas para analisar seu perfil.");
+                return;
+            }
+
             const formData = new FormData(document.getElementById('formTriagem'));
             let counts = { T:0, G:0, A:0, L:0, I:0, U:0, C:0 };
             
@@ -186,30 +239,40 @@
             let fitScore = ((counts.T * 2.5) + (counts.I * 3.5) - (counts.C * 2)) * 2;
             globalFitScore = Math.max(0, Math.min(100, fitScore)).toFixed(0);
 
-            // Verifica se o Fit Score é maior que 60
             if (globalFitScore > 60) {
-                next(4, 75); // Vai para etapa de Dados Complementares
+                next(4, 75);
             } else {
-                // Se for menor que 60, já envia os dados e encerra aqui (Banco de Talentos)
                 sendToGoogleSheets("Banco de Talentos (Fit < 60%)", 0);
                 showResult("Agradecemos seu tempo!", `No momento, seu perfil ficará em nosso banco de talentos. Agradecemos o interesse em fazer parte das Óticas Ammo.`);
             }
         }
 
         async function finalSubmission() {
-            // Algoritmo de Estabilidade
-            const dataInicio = document.getElementById('dataInicio').value;
-            const dataFim = document.getElementById('dataFim').value;
-            
-            if(!dataInicio) {
-                alert("Por favor, informe a Data de Início da sua última experiência.");
+            const form = document.getElementById('formTriagem');
+            const step4 = document.getElementById('step4');
+            const inputs = step4.querySelectorAll('input[required], select[required], textarea[required]');
+            let valid = true;
+
+            inputs.forEach(i => {
+                if(!i.value) {
+                    valid = false;
+                    i.classList.add('border-red-500');
+                } else {
+                    i.classList.remove('border-red-500');
+                }
+            });
+
+            if(!valid) {
+                alert("Por favor, preencha todos os campos do histórico e dados pessoais.");
                 return;
             }
 
-            let start = new Date(dataInicio);
-            let end = dataFim ? new Date(dataFim) : new Date(); // Se não colocar fim, assume a data atual
+            const dataInicio = document.getElementById('dataInicio').value;
+            const dataFim = document.getElementById('dataFim').value;
             
-            let mesesEstabilidade = (end.getFullYear() - start.getFullYear()) * 9 + (end.getMonth() - start.getMonth());
+            let start = new Date(dataInicio);
+            let end = dataFim ? new Date(dataFim) : new Date();
+            let mesesEstabilidade = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
             
             let status = "";
             let msgTitle = "";
@@ -222,18 +285,18 @@
                             <p class="font-bold text-xl">Apto para Entrevista Presencial</p>
                            </div>
                            <p class="text-gray-700 text-lg leading-relaxed">
-                            Agradecemos o seu interesse em fazer parte do time de elite das <b>Óticas Ammo</b>. 
                             Sua estabilidade e perfil comportamental superaram nossas expectativas iniciais!<br><br>
-                            <b>Próximo Passo:</b> Nosso time de recrutamento entrará em contato via WhatsApp para agendar sua entrevista pessoal. Fique atento(a)!
+                            <b>Próximo Passo:</b> Nosso time entrará em contato via WhatsApp.
                            </p>`;
             } else {
                 status = "Banco de Talentos (Estabilidade < 9m)";
                 msgTitle = "Candidatura Recebida";
-                msgBody = `<p class="text-gray-700 text-lg leading-relaxed">Agradecemos o envio dos seus dados completos! No momento, buscamos perfis com uma estabilidade um pouco maior em experiências anteriores, mas seu currículo ficará guardado em nosso Banco de Talentos Vip para oportunidades futuras nas Óticas Ammo.</p>`;
+                msgBody = `<p class="text-gray-700 text-lg leading-relaxed">Agradecemos o envio! No momento, buscamos perfis com estabilidade maior, mas seu currículo está em nosso Banco Vip.</p>`;
             }
 
-            event.target.innerText = "Enviando...";
-            event.target.disabled = true;
+            const btn = document.getElementById('btnFinalizar');
+            btn.innerText = "Enviando...";
+            btn.disabled = true;
 
             await sendToGoogleSheets(status, mesesEstabilidade);
             showResult(msgTitle, msgBody);
@@ -241,14 +304,9 @@
 
         async function sendToGoogleSheets(status, estabilidade) {
             const formData = new FormData(document.getElementById('formTriagem'));
-            let respostas = {};
-            for (let [key, value] of formData.entries()) {
-                if(!key.startsWith('q')) respostas[key] = value; // Salva apenas dados textuais, ignora as 'q1, q2' no json de respostas pra limpar a planilha
-            }
-
             const profiles = { T: "Tubarão", G: "Gato", A: "Águia", L: "Lobo" };
             let max = 'T';
-            ['G','A','L'].forEach(p => { if(globalCounts[p] > globalCounts[max]) max = p; });
+            ['G','A','L'].forEach(p => { if((globalCounts[p]||0) > (globalCounts[max]||0)) max = p; });
 
             const payload = {
                 nome: formData.get('nome'),
@@ -258,15 +316,15 @@
                 fitScore: globalFitScore,
                 estabilidade: estabilidade,
                 perfilDominante: profiles[max],
-                cpf: formData.get('cpf') || "-",
-                rg: formData.get('rg') || "-",
-                nascimento: formData.get('nascimento') || "-",
-                nomeMae: formData.get('nomeMae') || "-",
-                estadoCivil: formData.get('estadoCivil') || "-",
+                cpf: formData.get('cpf'),
+                rg: formData.get('rg'),
+                nascimento: formData.get('nascimento'),
+                nomeMae: formData.get('nomeMae'),
+                estadoCivil: formData.get('estadoCivil'),
                 conjugue: formData.get('conjugue') || "-",
-                dependentes: formData.get('dependentes') || "-",
-                ultimaExp: formData.get('ultimaExp') || "-",
-                outrasExp: formData.get('outrasExp') || "-"
+                dependentes: formData.get('dependentes'),
+                ultimaExp: formData.get('ultimaExp'),
+                outrasExp: formData.get('outrasExp')
             };
 
             try {
@@ -287,6 +345,4 @@
         }
     </script>
 </body>
-
 </html>
-
